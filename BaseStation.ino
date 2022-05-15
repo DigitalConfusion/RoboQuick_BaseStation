@@ -16,24 +16,12 @@ void onReceive(int packetSize) {
     digitalWrite(2, HIGH);
     incoming += (char)LoRa.read();
   }
-  Serial.println(incoming);
-  Serial.print(" -- RSSI = ");
+  Serial.print(incoming);
+  Serial.print(",");
   Serial.print(LoRa.packetRssi());
-  Serial.print(" -- SNR = ");
+  Serial.print(",");
   Serial.println(LoRa.packetSnr());
   digitalWrite(2, LOW);
-}
-
-void sendRequest(){
-  String input;
-  if(Serial.available()){
-    input = Serial.readStringUntil('\n');
-    Serial.print("Sent request: ");
-    Serial.println(input);
-    LoRa.beginPacket();
-    LoRa.print(input);
-    LoRa.endPacket();
-  }
 }
   
 void setup() {
@@ -48,11 +36,9 @@ void setup() {
   LoRa.setTxPower(20);
   LoRa.setSpreadingFactor(10);
   LoRa.setSignalBandwidth(125E3);
-  //LoRa.enableCrc();
-  LoRa.setGain(6);
+  // LoRa.setGain(6);
 }
 
 void loop() {
   onReceive(LoRa.parsePacket());
-  sendRequest();
 }

@@ -1,0 +1,47 @@
+//YWROBOT
+//Compatible with the Arduino IDE 1.0
+//Library version:1.1
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27,16,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
+
+void setup()
+{
+  
+
+  lcd.init();                      // initialize the lcd
+  // Print a message to the LCD.
+  lcd.backlight();
+  lcd.setCursor(3,0);
+  
+}
+
+unsigned long pause = 1000;
+unsigned long time_previous = 0;
+void loop()
+{
+  unsigned long time_current = millis();
+  
+  if (time_current - time_previous >= pause) {
+    long latitude = random(0, 100);
+    long longitude = random(0, 100);
+    long height = random(10, 20);
+    long speed = random(30, 45);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print(latitude);
+    lcd.setCursor(10,0);
+    lcd.print(longitude);
+    lcd.setCursor(0,1);
+    lcd.print("Height: ");
+    lcd.print(height);
+    lcd.setCursor(0,2);
+    lcd.print("Speed: ");
+    lcd.print(speed);
+    lcd.setCursor(0,3);
+    lcd.print("Vieta reklamai");
+    time_previous = time_current;
+  }
+  
+  
+}

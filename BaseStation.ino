@@ -25,7 +25,7 @@ const int resetPin = 26;
 const int irqPin = 25;
 
 // Frquency for LoRa in Hz
-const long freq = 4338E5; // 433.7 MHz
+const long freq = 4339E5; // 433.9 MHz
 
 // Last received message time
 unsigned long last_message_time = 0;
@@ -185,6 +185,10 @@ void setup() {
   // Even if one charachter is corrupted, the entire message is thrown out
   LoRa.enableCrc();
 
+  // See if the SD card is present and initialize it
+  while (!SD.begin(BUILTIN_SDCARD)) {
+    delay(1000);
+  }
   // Create new csv file to store received data
   create_sd_file();
   
